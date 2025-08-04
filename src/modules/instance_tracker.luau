@@ -2,7 +2,6 @@
 local DefaultProperties = require("@config/default_properties")
 local Themes = require("@config/themes")
 local Flipper = require("@pkgs/flipper")
-local Trove = require("@pkgs/trove")
 local SharedState = require("@shared/state")
 
 -- // Types
@@ -13,7 +12,6 @@ export type ThemedInstanceProperties = {
 export type InstanceTrackerData = {
     Motors: { typeof(Flipper.SingleMotor.new(1)) },
     Theme: Themes.Theme,
-    Trove: Trove.Trove,
     ThemedInstances: { [Instance]: ThemedInstanceProperties },
 }
 
@@ -36,11 +34,19 @@ do
         -- // Set
         self.Motors = {}
         self.Theme = "Dark"
-        self.Trove = Trove.new()
         self.ThemedInstances = {}
 
         -- // Return the object
         return self
+    end
+
+    --[=[
+        Destroy this object.
+    ]=]
+    function InstanceTracker.Destory(self: InstanceTracker)
+        table.clear(self.Motors)
+        table.clear(self.ThemedInstances)
+        setmetatable(self :: any, nil)
     end
 
     --[=[

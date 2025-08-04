@@ -244,6 +244,13 @@ repo = "https://github.com/rocult/luau-defs"
 tree_id = "6526168c56ec749539a52279d8bbe6c63134c93d"
 new_structure = true
 
+[graph."wally#reselim/flipper@2.0.0 roblox"]
+direct = ["flipper", { wally = "wally#reselim/flipper", version = "^2.0.0", index = "default" }, "standard"]
+
+[graph."wally#reselim/flipper@2.0.0 roblox".pkg_ref]
+ref_ty = "wally"
+index_url = "https://github.com/UpliftGames/wally-index"
+
 [graph."wally#sleitnick/trove@1.5.1 roblox"]
 direct = ["trove", { wally = "wally#sleitnick/trove", version = "^1.5.1", index = "default" }, "standard"]
 

@@ -25,6 +25,7 @@ default = "https://github.com/pesde-pkg/index"
 default = "https://github.com/UpliftGames/wally-index"
 
 [dependencies]
+flipper = { wally = "reselim/flipper", version = "^2.0.0" }
 signal = { name = "jiwonz/signal", version = "^0.1.0" }
 trove = { wally = "sleitnick/trove", version = "^1.5.1" }
 

@@ -1,12 +1,8 @@
-# Example Project
+# Laminar Fluent UI
 
-This is an opinionated project layout, how I think you should layout your projects. View the chapters for each part below.
+A proper rewrite of the Fluent UI Library, including bug fixes and better code in general.
 
-## Documentation
-
-Please read the documentation on how to best use this template and installation. You can find it on the [docs branch here](https://github.com/rocult/script-template/tree/docs).
-
-## Building and Usage
+## Building
 
 *If you don't want to read the documentation...*
 
@@ -15,3 +11,4 @@ Please read the documentation on how to best use this template and installation.
 3. Run `pesde install` while `cd` in this (root) directory
    1. \[Optional\] Reload Luau Language Server (`CTRL + P` and search for it)
 4. Run [build.bat](./scripts/build.bat)
+5. Use the outputted file in project root > `dist.lua`

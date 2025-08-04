@@ -2,6 +2,7 @@
   "aliases": {
     "pkgs": "./roblox_packages",
     "core": "./src/core",
+    "functions": "./src/functions", 
     "modules": "./src/modules",
     "shared": "./src/shared",
     "types": "./src/types",

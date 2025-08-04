@@ -1,7 +1,7 @@
-name = "stefanuk12/example_project"
-description = "An opinionated project layout for Roblox exploit scripts."
+name = "stefanuk12/laminar_fluent"
+description = "A proper rewrite of the Fluent UI Library."
 version = "0.1.0"
-authors = ["Stefanuk12"]
+authors = ["Stefanuk12 <stefan@petrovic.foo>"]
 license = "MIT"
 includes = ["pesde.toml", "README.md", "LICENSE", "src/*"]
 
@@ -12,9 +12,7 @@ lune = "=0.8.9"
 [target]
 build_files = ["src"]
 environment = "roblox"
-# Remove bin AND lib, if you are not publishing to the registry
-bin = "src/main.luau"  # Remove this, if this is not a binary
-lib = "src/init.luau"  # Remove this, if this is not a library
+lib = "src/init.luau"
 
 [scripts]
 roblox_sync_config_generator = ".pesde/scripts/roblox_sync_config_generator.luau"
@@ -27,8 +25,8 @@ default = "https://github.com/pesde-pkg/index"
 default = "https://github.com/UpliftGames/wally-index"
 
 [dependencies]
-# Example dependency below, remove it if you don't need it
-promise = { wally = "lukadev-0/typed-promise", version = "^4.0.0" }
+signal = { name = "jiwonz/signal", version = "^0.1.0" }
+trove = { wally = "sleitnick/trove", version = "^1.5.1" }
 
 [dev_dependencies]
 darklua = { repo = "Stefanuk12/darklua", rev = "3af4b5a642ddda5141cfb086021626c97f82047d", target = "lune" }

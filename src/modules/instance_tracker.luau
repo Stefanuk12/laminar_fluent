@@ -1,4 +1,5 @@
 -- // Dependencies
+local Trove = require("@pkgs/trove")
 local DefaultProperties = require("@config/default_properties")
 local Themes = require("@config/themes")
 local Flipper = require("@pkgs/flipper")
@@ -10,6 +11,7 @@ export type ThemedInstanceProperties = {
     [string]: string,
 }
 export type InstanceTrackerData = {
+    Trove: Trove.Trove,
     Motors: { typeof(Flipper.SingleMotor.new(1)) },
     Theme: Themes.Theme,
     ThemedInstances: { [Instance]: ThemedInstanceProperties },
@@ -32,6 +34,7 @@ do
         local self = setmetatable({}, InstanceTracker)
 
         -- // Set
+        self.Trove = Trove.new()
         self.Motors = {}
         self.Theme = "Dark"
         self.ThemedInstances = {}
@@ -46,6 +49,7 @@ do
     function InstanceTracker.Destory(self: InstanceTracker)
         table.clear(self.Motors)
         table.clear(self.ThemedInstances)
+        self.Trove:Destroy()
         setmetatable(self :: any, nil)
     end
 
@@ -114,9 +118,9 @@ do
         IgnoreDialogCheck = IgnoreDialogCheck or false
         ResetOnThemeChange = ResetOnThemeChange or false
         local Motor = Flipper.SingleMotor.new(InitialValue)
-        Motor:onStep(function(value)
+        self.Trove:Add(Motor:onStep(function(value)
             Instance[Property] = value
-        end)
+        end))
 
         if ResetOnThemeChange then
             table.insert(self.Motors, Motor)
@@ -135,7 +139,10 @@ do
             Motor:setGoal(Flipper.Spring.new(Value, { frequency = 8 }))
         end
 
-        return Motor, SetValue
+        return {
+            Motor = Motor,
+            Setter = SetValue,
+        }
     end
 
     --[=[

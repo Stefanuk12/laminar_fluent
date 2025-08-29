@@ -20,15 +20,15 @@ export type DraggerData = DraggerConstructorData & {
     StartPosition: UDim2?,
 }
 export type ResizerConstructorData = {
-    ResizeFrame: Frame,
-    SizeMotor: typeof(Flipper.SingleMotor.new(0)),
     GetStartSize: () -> UDim2,
     GetMinSize: () -> Vector2,
+    ResizeFrame: Frame,
     SetSize: (Size: UDim2) -> (),
+    SizeMotor: typeof(Flipper.SingleMotor.new(0)),
 }
 export type ResizerData = ResizerConstructorData & {
-    Resizing: boolean,
     ResizePosition: UDim2?,
+    Resizing: boolean,
 }
 export type DraggerResizerConstructorData = | {
     Mode: "Drag",
@@ -40,6 +40,7 @@ export type DraggerResizerConstructorData = | {
     Mode: "Both",
     Data: DraggerConstructorData & ResizerConstructorData,
 }
+export type BothData = DraggerData & ResizerData
 export type DraggerResizerMode = | {
     Mode: "Drag",
     Data: DraggerData,
@@ -48,7 +49,7 @@ export type DraggerResizerMode = | {
     Data: ResizerData,
 } | {
     Mode: "Both",
-    Data: DraggerData & ResizerData,
+    Data: BothData,
 }
 export type DraggerResizerData = {
     Trove: Trove.Trove,
@@ -69,42 +70,67 @@ do
 
         -- // Set
         self.Trove = Trove.new()
+        local Mode: DraggerResizerMode
         if Data.Mode == "Drag" then
             local ActualData = Data.Data
-            local Mode: DraggerData = {
-                DragFrame = ActualData.DragFrame,
-                GetStartPosition = ActualData.GetStartPosition,
-                SetPosition = ActualData.SetPosition,
-                Dragging = false,
+            Mode = {
+                Mode = Data.Mode,
+                Data = {
+                    DragFrame = ActualData.DragFrame,
+                    GetStartPosition = ActualData.GetStartPosition,
+                    SetPosition = ActualData.SetPosition,
+
+                    Dragging = false,
+                    DragInput = nil :: Enum.InputType?,
+                    DragStart = nil :: Vector2?,
+                    DragStartPosition = nil :: Vector2?,
+                    MousePosition = nil :: Vector3?,
+                    StartPosition = nil :: UDim2?,
+                }
             }
-            self.Mode = { Mode = "Drag", Data = Mode }
         elseif Data.Mode == "Resize" then
             local ActualData = Data.Data
-            local Mode: ResizerData = {
-                ResizeFrame = ActualData.ResizeFrame,
-                SizeMotor = ActualData.SizeMotor,
-                GetStartSize = ActualData.GetStartSize,
-                GetMinSize = ActualData.GetMinSize,
-                SetSize = ActualData.SetSize,
-                Resizing = false,
+            Mode = {
+                Mode = Data.Mode,
+                Data = {
+                    GetMinSize = ActualData.GetMinSize,
+                    GetStartSize = ActualData.GetStartSize,
+                    ResizeFrame = ActualData.ResizeFrame,
+                    SizeMotor = ActualData.SizeMotor,
+                    SetSize = ActualData.SetSize,
+
+                    ResizePosition = nil :: UDim2?,
+                    Resizing = false,
+                }
             }
-            self.Mode = { Mode = "Resize", Data = Mode }
         else
             local ActualData = Data.Data
-            local Mode: DraggerResizerData = {
-                DragFrame = ActualData.DragFrame,
-                GetStartPosition = ActualData.GetStartPosition,
-                Dragging = false,
+            Mode = {
+                Mode = "Both" :: "Both",
+                Data = {
+                    -- DraggerData fields
+                    DragFrame = ActualData.DragFrame,
+                    GetStartPosition = ActualData.GetStartPosition,
+                    SetPosition = ActualData.SetPosition,
+                    Dragging = false,
+                    DragInput = nil :: Enum.InputType?,
+                    DragStart = nil :: Vector2?,
+                    DragStartPosition = nil :: Vector2?,
+                    MousePosition = nil :: Vector3?,
+                    StartPosition = nil :: UDim2?,
 
-                ResizeFrame = ActualData.ResizeFrame,
-                SizeMotor = ActualData.SizeMotor,
-                GetStartSize = ActualData.GetStartSize,
-                GetMinSize = ActualData.GetMinSize,
-                SetSize = ActualData.SetSize,
-                Resizing = false,
+                    -- ResizerData fields
+                    ResizeFrame = ActualData.ResizeFrame,
+                    SizeMotor = ActualData.SizeMotor,
+                    GetStartSize = ActualData.GetStartSize,
+                    GetMinSize = ActualData.GetMinSize,
+                    SetSize = ActualData.SetSize,
+                    ResizePosition = nil :: UDim2?,
+                    Resizing = false,
+                }
             }
-            self.Mode = { Mode = "Both", Data = Mode }
         end
+        self.Mode = Mode
 
         -- // Return the object
         return self

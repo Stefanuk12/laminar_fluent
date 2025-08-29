@@ -332,7 +332,7 @@ do
                 self.Minimised = not self.Minimised
                 self.Instances.Root.Visible = self.Minimised
 
-                local Icon = self.Mobile.GetIcon(self.Minimised)
+                local Icon = self.Mobile.GetIcon(tostring(self.Minimised))
                 HideButton.Image = Icon.Image
                 HideButton.ImageRectOffset = Icon.ImageRectOffset
                 HideButton.ImageRectSize = Icon.ImageRectSize
@@ -425,7 +425,7 @@ do
         end
 
         if GetOS() == "Mobile" then
-            local Icon = self.Mobile:GetIcon(tostring(self.Minimised)) -- TODO: fix this
+            local Icon = self.Mobile.GetIcon(tostring(self.Minimised)) -- TODO: fix this
             self.Instances.HideButton.Image = Icon.Image
             self.Instances.HideButton.ImageRectOffset = Icon.ImageRectOffset
             self.Instances.HideButton.ImageRectSize = Icon.ImageRectSize

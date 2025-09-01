@@ -2,8 +2,6 @@
 local Create = require("@functions/create")
 local BarButton = require("@elements/barbutton")
 
--- // Services
-
 -- // Types
 export type TitleBarDataWindow = {
     Maximised: boolean,
